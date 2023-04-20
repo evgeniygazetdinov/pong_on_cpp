@@ -5,18 +5,50 @@ using namespace sf;
 
 float frame = 0.0;
 
+class Player{
+  public:
+    float x, y, weight, height, vx, vy, speed = 0;
+    int direction = 0;
+    String filename;
+    Image image;
+    Texture texture;
+    Sprite sprite;
+    float wayDistance = 0.5;
+    float animationSpeed = 0.01;
+    Player(int posX, int posY, int playerWeight, int playerHeight, String cartonName){
+        x = posX;
+        y = posY;
+        weight = playerWeight;
+        height = playerHeight;
+        filename = cartonName;
+        image.loadFromFile("images/" + filename);
+        texture.loadFromImage(image);
+        // square for stretch texture
+        sprite.setTexture(texture); // ширина и высота
+        sprite.setTextureRect(IntRect(0, 0, weight, height));
+        sprite.setPosition(x, y);
+    }
+    void update(float time){
+      switch (dir)
+      {
+      case /* constant-expression */:
+        /* code */
+        break;
+      
+      default:
+        break;
+      }
+
+    }
+    
+
+};
+
 int main() {
   RenderWindow window(VideoMode(640, 480), "my turbo game");
+  Player hero(50, 50, 31, 32, "player.png");
+  
 
-  Image image;
-  image.loadFromFile("images/player.png");
-  Texture texture;
-  texture.loadFromImage(image);
-  // square for stretch texture
-  Sprite player;
-  player.setTexture(texture); // ширина и высота
-  player.setTextureRect(IntRect(0, 0, 31, 32));
-  player.setPosition(10, 10);
 
   //bound by time
 
@@ -30,8 +62,7 @@ int main() {
     Event event;
 
     // move variable
-    float wayDistance = 0.5;
-    float animationSpeed = 0.05;
+
     while (window.pollEvent(event)) {
       if (event.type == Event::Closed)
         window.close();
