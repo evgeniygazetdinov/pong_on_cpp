@@ -14,7 +14,7 @@ class Player{
     Texture texture;
     Sprite sprite;
     float wayDistance = 0.5;
-    float animationSpeed = 0.01;
+    float animationSpeed = 0.08;
     Player(int posX, int posY, int playerWeight, int playerHeight, String cartonName){
         x = posX;
         y = posY;
@@ -29,14 +29,17 @@ class Player{
         sprite.setPosition(x, y);
     }
     void update(float time){
-      switch (dir)
+      switch (direction)
       {
-      case /* constant-expression */:
-        /* code */
-        break;
-      
-      default:
-        break;
+      case 0: vx = -speed; vy = 0; break;
+      case 1: vx = speed; vy = 0; break;
+      case 2: vx = 0; vy = -speed; break;
+      case 3: vx = 0; vy = speed; break;
+      x += vx * time;
+      y += vy * time;
+      speed = 0;
+      sprite.setPosition(x, y);
+
       }
 
     }
@@ -72,28 +75,36 @@ int main() {
     }
     //move into another class
     if (Keyboard::isKeyPressed(Keyboard::Left)) {
-      player.move(-wayDistance * time, 0);
-       if (frame > 2) frame -= 2;
-        player.setTextureRect(IntRect(31 *int(frame),96, 31, 32));
-    }
+      hero.direction = 0; hero.speed = hero.animationSpeed;
+      frame += 0.02;
+      hero.sprite.move(-1.0, 0);
+      if (frame > 2) frame -= 2;
+        hero.sprite.setTextureRect(IntRect(31 *int(frame),96, 31, 32));
+      }
     if (Keyboard::isKeyPressed(Keyboard::Right)) {
-      player.move(wayDistance * time, 0);
+     hero.direction = 0; hero.speed = hero.animationSpeed;
+     frame += 0.02;
+     hero.sprite.move(1.0, 0);
       if (frame > 2) frame -= 2;
-        player.setTextureRect(IntRect(31 *int(frame),32, 31, 32));
-    }
-    if (Keyboard::isKeyPressed(Keyboard::Up)) {
-      player.move(0, -wayDistance * time);
-      if (frame > 2) frame -= 2;
-        player.setTextureRect(IntRect(31 *int(frame),0, 31, 32));
-    }
-    if (Keyboard::isKeyPressed(Keyboard::Down)) {
-      player.move(0, wayDistance * time);
-      if (frame > 2) frame -= 2;
-        player.setTextureRect(IntRect(31 *int(frame),64, 31, 32));
-    }
+        hero.sprite.setTextureRect(IntRect(31 *int(frame),32, 31, 32));
+      }
 
+    if (Keyboard::isKeyPressed(Keyboard::Up)) {
+      hero.direction = 0; hero.speed = hero.animationSpeed;
+      frame += 0.02; 
+      if (frame > 2) frame -= 2;
+        hero.sprite.setTextureRect(IntRect(31 *int(frame),0, 31, 32));
+      }
+    if (Keyboard::isKeyPressed(Keyboard::Down)) {
+     hero.direction = 0; hero.speed = hero.animationSpeed;
+     frame += 0.02;
+      if (frame > 2) frame -= 2;
+        hero.sprite.setTextureRect(IntRect(31 *int(frame),64, 31, 32));
+      }
+
+    hero.update(time);
     window.clear();
-    window.draw(player);
+    window.draw(hero.sprite);
     window.display();
   }
 
