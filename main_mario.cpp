@@ -16,27 +16,26 @@ int main() {
                                  // x y weight height
   mySprite.setTextureRect(IntRect(0, 244, 40, 50));
   mySprite.setPosition(50, 100);
+   Clock myclock;
 
-  Clock myclock;
 
   while (window.isOpen()) {
-    // float time = myclock.getElapsedTime().asMicroseconds();
-    // myclock.restart();
-    // time = time / 1500;
+    float time = myclock.getElapsedTime().asMicroseconds();
+    myclock.restart();
+    time = time / 800;
     Event event;
 
 
     while (window.pollEvent(event)) {
+
       if (event.type == Event::Closed)
         window.close();
       if(Keyboard::isKeyPressed(Keyboard::Escape)){
         window.close();
       }
       if (Keyboard::isKeyPressed(Keyboard::Left)) {
-          mySprite.move(-10, 0);
-          std::cout<<"LEFT"<<std::endl;
-           currentFrame += 0.005;
-         currentFrame += 1;
+          mySprite.move(-10 * time, 0);
+         currentFrame += 1 * time;
           if(currentFrame >6){
             currentFrame -=6;
           }
@@ -45,8 +44,8 @@ int main() {
 
       }
       if (Keyboard::isKeyPressed(Keyboard::Right)) {
-          mySprite.move(10, 0);
-          currentFrame += 1;
+          mySprite.move(10* time, 0);
+          currentFrame += 1 * time;
           if(currentFrame >6){
             currentFrame -=6;
           }

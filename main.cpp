@@ -5,6 +5,7 @@ using namespace sf;
 
 float frame = 0.0;
 
+
 class Player{
   public:
     float x, y, weight, height, vx, vy, speed = 0;
@@ -64,6 +65,7 @@ int main() {
     time = time / 1500;
     Event event;
 
+
     // move variable
 
     while (window.pollEvent(event)) {
@@ -77,14 +79,14 @@ int main() {
     if (Keyboard::isKeyPressed(Keyboard::Left)) {
       hero.direction = 0; hero.speed = hero.animationSpeed;
       frame += 0.02;
-      hero.sprite.move(-1.0, 0);
+      hero.sprite.move(-1.0 * time, 0);
       if (frame > 2) frame -= 2;
         hero.sprite.setTextureRect(IntRect(31 *int(frame),96, 31, 32));
       }
     if (Keyboard::isKeyPressed(Keyboard::Right)) {
      hero.direction = 0; hero.speed = hero.animationSpeed;
      frame += 0.02;
-     hero.sprite.move(1.0, 0);
+     hero.sprite.move(1.0 * time, 0);
       if (frame > 2) frame -= 2;
         hero.sprite.setTextureRect(IntRect(31 *int(frame),32, 31, 32));
       }
