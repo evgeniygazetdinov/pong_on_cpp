@@ -36,9 +36,7 @@ int main() {
       if (Keyboard::isKeyPressed(Keyboard::Left)) {
           mySprite.move(-10 * time, 0);
          currentFrame += 1 * time;
-          if(currentFrame >6){
-            currentFrame -=6;
-          }
+          if(currentFrame >6)currentFrame -=6;
           // INVERTING POSITION 
           mySprite.setTextureRect(IntRect(40 * int(currentFrame)+40, 244,-40,50));
 
@@ -46,9 +44,7 @@ int main() {
       if (Keyboard::isKeyPressed(Keyboard::Right)) {
           mySprite.move(10* time, 0);
           currentFrame += 1 * time;
-          if(currentFrame >6){
-            currentFrame -=6;
-          }
+          if(currentFrame >6)currentFrame -=6;
           mySprite.setTextureRect(IntRect(40 * int(currentFrame), 244,40,50));
       }
     }
