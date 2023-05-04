@@ -15,7 +15,7 @@ class Player{
    Player(Texture &image){
     sprite.setTexture(image);
     rect = FloatRect(0, 0, 40, 50);
-    dx = dy = 0;
+    dx = dy = 40;
     currentFrame = 0;
    }
    void update(float time){
@@ -25,25 +25,23 @@ class Player{
       } 
       rect.top += dy * time;
       onGround = false;
-      currentFrame += 0.005 * time;
-
+      // currentFrame += 0.005 * time;
+      if(rect.top > ground){
+        rect.top = ground;
+        dy = 0;
+        onGround = true;
+      }
+      currentFrame+=0.05 * time;
       if(currentFrame >6){
         currentFrame -=6;
       }
-      sprite.setTextureRect(IntRect(40 * int(currentFrame), 244,40,50));
+      // sprite.setTextureRect(IntRect(40 * int(currentFrame), 244,40,50));
       if(dx>0){
         sprite.setTextureRect(IntRect(40 * int(currentFrame), 244,40,50));
       }
       if(dx<0){
         sprite.setTextureRect(IntRect(40 * int(currentFrame)+40, 244,-40,50));
       }
-
-      
-      if(rect.top > ground){
-        rect.top = ground;
-        dy = 0;
-        onGround = true;
-      } 
       sprite.setPosition(rect.left, rect.top);
       dx = 0;
    }
@@ -79,16 +77,16 @@ int main() {
         window.close();
       }
       if (Keyboard::isKeyPressed(Keyboard::Left)) {
-         myPlayer.dx = -40;
+         myPlayer.dx = -30;
 
       }
       if (Keyboard::isKeyPressed(Keyboard::Right)) {
-          myPlayer.dx = 40;
+          myPlayer.dx = 30;
 
       }
       if (Keyboard::isKeyPressed(Keyboard::Up)) {
           if(myPlayer.onGround){
-            myPlayer.dy=-0.4; myPlayer.onGround = false;
+            myPlayer.dy=-0.2; myPlayer.onGround = false;
           }
           
       }
