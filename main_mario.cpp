@@ -4,6 +4,24 @@
 using namespace sf;
 
 int ground = 150;
+const int H = 24;
+const int W = 80;
+
+String TileMap[H] = {
+"BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+"B                                      B",
+"B                                      B",
+"B                                      B",
+"B                                      B",
+"B                                      B",
+"B                                      B",
+"B                                      B",
+"BBBBBB      0                          B",
+"B           0                          B",
+"B           0                          B",
+"BBBBB     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB",
+};
+
 
 class Player{
   public:
@@ -22,10 +40,9 @@ class Player{
       rect.left += dx * time;
       if(!onGround) {
         dy=dy + 0.0005 * time;
-      } 
-      rect.top += dy * time;
-      onGround = false;
-      // currentFrame += 0.005 * time;
+        rect.top += dy * time;
+        onGround=false;
+      }
       if(rect.top > ground){
         rect.top = ground;
         dy = 0;
@@ -35,7 +52,6 @@ class Player{
       if(currentFrame >6){
         currentFrame -=6;
       }
-      // sprite.setTextureRect(IntRect(40 * int(currentFrame), 244,40,50));
       if(dx>0){
         sprite.setTextureRect(IntRect(40 * int(currentFrame), 244,40,50));
       }
@@ -49,8 +65,6 @@ class Player{
 };
 
 
-
-
 int main() {
 
   float currentFrame = 0;
@@ -60,6 +74,8 @@ int main() {
 
   Player myPlayer(myTexture);  
   Clock myclock;
+
+RectangleShape rectangle;
 
 
   while (window.isOpen()) {
@@ -88,11 +104,26 @@ int main() {
           if(myPlayer.onGround){
             myPlayer.dy=-0.2; myPlayer.onGround = false;
           }
-          
       }
     }
     myPlayer.update(time);
     window.clear();
+    for(int i=0;i<H;i++)
+      for(int j=0;j<W;j++){
+        if(TileMap[i][j] == 'B'){
+          rectangle.setFillColor(Color::Blue);
+          std::cout<<i<<std::endl;
+        }
+        if(TileMap[i][j] == ' '){
+          continue;
+        }
+        if(TileMap[i][j] == '0'){
+          rectangle.setFillColor(Color::Green);
+        }
+        rectangle.setPosition(0, 0);
+        window.draw(rectangle);
+      }
+    
     window.draw(myPlayer.sprite);
     window.display();
   }
