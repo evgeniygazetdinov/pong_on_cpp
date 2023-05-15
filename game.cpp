@@ -50,3 +50,54 @@ void Game::Move(Direction direction)
     solved = check();
 
 }
+void Game::draw(sf::RenderTarget& target,sf::RenderStates states) const
+{
+    states.transform *= getTransform();
+    sf::Color color = sf::Color(200, 100, 200);
+
+    // рисуем рамку игрового поля
+    sf::RectangleShape shape(sf::Vector2f(FIELD_SIZE, FIELD_SIZE));
+    shape.setOutlineThickness(2.f);
+    shape.setOutlineColor(color);
+    shape.setFillColor(sf::Color::Transparent);
+    target.draw(shape, states);
+
+    //подгототавливаем рамку для отрисовки всех плашек
+
+    shape.setSize(sf::Vector2f(CELL_SIZE-2, CELL_SIZE-2));
+    shape.setOutlineThickness(2.f);
+    shape.setOutlineColor(color);
+    shape.setFillColor(sf::Color::Transparent);
+
+    // тестовая заготовка для отрисовки плашек
+    sf::Text text("", font, 52);
+    for( unsigned int i = 0;i< ARRAY_SIZE;i++)
+    {
+        shape.setOutlineColor(color);
+        text.setFillColor(color);
+        text.setString(std::to_string(elements[i]));
+        if(solved)
+        {
+            //решеную головоломку закрашиваем другим цветом
+            shape.setOutlineColor(sf::Color::Cyan);
+            text.setFillColor(sf::Color::Cyan);
+        }
+        else if(elements[i] == i + 1)
+        {
+            // выделение цветом плашек
+            text.setFillColor(sf::Color::Green);
+        }
+        //рисуем все плашки кроме пустой
+        if(elements[i] > 0)
+        {
+            sf::Vector2f position(i % SIZE * CELL_SIZE + 10.f, i / SIZE * CELL_SIZE + 10.f);
+            shape.setPosition(position);
+
+            shape.setPosition(position);
+			text.setPosition(position.x + 30.f + (elements[i] < 10 ? 15.f : 0.f), position.y + 25.f);
+            target.draw(shape, states);
+            target.draw(text, states);
+        }
+    }
+
+}
