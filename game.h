@@ -25,5 +25,4 @@ class Game : public sf::Drawable, public sf::Transformable
         void Move(Direction myDirection);
     public:
         virtual void draw(sf::RenderTarget& target, sf::RenderStates states) const;
-
 };
