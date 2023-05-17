@@ -70,7 +70,7 @@ void Game::draw(sf::RenderTarget& target,sf::RenderStates states) const
     shape.setFillColor(sf::Color::Transparent);
 
     // тестовая заготовка для отрисовки плашек
-    sf::Text text("", font, 52);
+    sf::Text text(" ", font, 52);
     for( unsigned int i = 0;i< ARRAY_SIZE;i++)
     {
         shape.setOutlineColor(color);
@@ -91,8 +91,6 @@ void Game::draw(sf::RenderTarget& target,sf::RenderStates states) const
         if(elements[i] > 0)
         {
             sf::Vector2f position(i % SIZE * CELL_SIZE + 10.f, i / SIZE * CELL_SIZE + 10.f);
-            shape.setPosition(position);
-
             shape.setPosition(position);
 			text.setPosition(position.x + 30.f + (elements[i] < 10 ? 15.f : 0.f), position.y + 25.f);
             target.draw(shape, states);
